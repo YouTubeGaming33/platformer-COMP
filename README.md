@@ -75,4 +75,13 @@ class Bullet(pygame.sprite.Sprite):
                 
     bullets = pygame.sprite.Group()
 
+# implemented by Josh
 
+
+
+
+
+
+
+# https://sfxr.me/
+# the website used for sound effects
