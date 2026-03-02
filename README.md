@@ -7,3 +7,8 @@ To Do:
 - [ ] player.py
 - [ ] Watergun.py
 - [ ] enimies.py
+
+links:
+https://gamedevacademy.org/pygame-animation-tutorial-complete-guide/
+https://www.photopea.com/
+https://github.com/YouTubeGaming33/platformer-COMP/tree/main/assets/sprites
