@@ -41,14 +41,9 @@ class Game:
         self.update_layer = pygame.sprite.Group()
 
         self.load_new_level(1)
-        test_player = Player(0,0)
-        self.render_layer.add(test_player)
-        self.update_layer.add(test_player)
-        
-        self.render_layer = pygame.sprite.Group()
-        self.update_layer = pygame.sprite.Group()
-
-        self.load_new_level(1)
+        self.test_player = Player(0,0)
+        self.render_layer.add(self.test_player)
+        self.update_layer.add(self.test_player)
 
         self.play_button = Button((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2), 100, 50, "Play")
 
@@ -88,6 +83,8 @@ class Game:
                     if self.play_button.is_clicked(mouse_pos):
                         self.state = "PLAYING"
 
+            self.update_layer.update()
+
             match self.state:
                 case "MAIN_MENU":
                     self.screen.fill((200,200,200))
@@ -104,6 +101,7 @@ class Game:
                         self.render_layer.draw(self.screen)
                     except Exception as e:
                         print (e)
+
 
             pygame.display.flip()
                 
