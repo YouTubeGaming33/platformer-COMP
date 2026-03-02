@@ -24,6 +24,7 @@ def parse_level(file_path):
                         new_line.append("")
                     case "T":
                         new_line.append(TestTile)
+                    
             
             data.append(new_line)
         
@@ -47,3 +48,4 @@ def load_level(level_data, game):
             if cell == TestTile:
                 new_tile = TestTile(x,y)
                 game.render_layer.add(new_tile)
+                game.tile_layer.add(new_tile)

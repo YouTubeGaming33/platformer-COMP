@@ -38,11 +38,14 @@ class Game:
         
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
+        self.tile_layer = pygame.sprite.Group()
 
         self.load_new_level(1)
         self.test_player = Player(0,0)
         self.render_layer.add(self.test_player)
         self.update_layer.add(self.test_player)
+        self.test_player.tile_sprites = self.tile_layer
+        self.test_player.check_collision(self.tile_layer)
 
     def tick(self):
         """
@@ -68,8 +71,6 @@ class Game:
         """
         while self.running:
             self.tick()
-            
-            self.update_layer.update()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -81,13 +82,7 @@ class Game:
                 case "PLAYING":
                     self.screen.fill((255,255,255))
                     self.render_layer.draw(self.screen)
-
-                    try:
-                        self.render_layer.draw(self.screen)
-                        self.update_layer.update(self.screen)
-                    except Exception as e:
-                        print (e)
-
+                    self.update_layer.update()
 
             pygame.display.flip()
                 
