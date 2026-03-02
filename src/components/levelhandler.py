@@ -1,5 +1,5 @@
 import pygame
-from src.components.tiles import TestTile
+from src.components.tiles import TestTile, SandTile
 from settings import TILE_HEIGHT, TILE_WIDTH
 
 
@@ -23,7 +23,7 @@ def parse_level(file_path):
                     case ".":
                         new_line.append("")
                     case "T":
-                        new_line.append(TestTile)
+                        new_line.append(SandTile)
             
             data.append(new_line)
         
@@ -44,6 +44,6 @@ def load_level(level_data, game):
 
             if cell == "":
                 pass
-            if cell == TestTile:
-                new_tile = TestTile(x,y)
+            if cell == SandTile:
+                new_tile = SandTile(x,y)
                 game.render_layer.add(new_tile)
