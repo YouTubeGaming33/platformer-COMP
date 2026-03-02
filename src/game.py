@@ -8,6 +8,7 @@ from settings import SCREEN_HEIGHT, SCREEN_WIDTH, FRAMERATE
 from src.components.player import Player
 from src.components.tiles import TestTile
 from src.components.levelhandler import parse_level, load_level
+from src.components.player import Player
 
 class Game:
     """
@@ -38,6 +39,7 @@ class Game:
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
 
+        self.load_new_level(1)
         test_player = Player(0,0)
         self.render_layer.add(test_player)
         self.update_layer.add(test_player)
