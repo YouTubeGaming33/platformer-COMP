@@ -31,4 +31,11 @@ class TestTile(BaseTile):
     def __init__(self, x, y):
         super().__init__(x, y, "assets/sprites/placeholder tile.png")
         self.collidable = True
-        
+    
+class SandTile(BaseTile):
+    """
+    A Sand Tile for the player to stand on.
+    """
+    def __init__(self, x, y):
+        super().__init__(x,y, "assets/sprites/sand.png")
+        self.collidable = True

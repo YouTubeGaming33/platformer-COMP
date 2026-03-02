@@ -9,6 +9,7 @@ from src.components.player import Player
 from src.components.tiles import TestTile
 from src.components.levelhandler import parse_level, load_level
 from src.components.player import Player
+from src.components.ui import Button
 
 class Game:
     """
@@ -34,7 +35,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.delta_time = 0.1
         self.running = True
-        self.state = "PLAYING"
+        self.state = "MAIN_MENU"
         
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
@@ -46,6 +47,8 @@ class Game:
         self.update_layer.add(self.test_player)
         self.test_player.tile_sprites = self.tile_layer
         self.test_player.check_collision(self.tile_layer)
+
+        self.play_button = Button((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2), 100, 50, "Play")
 
     def tick(self):
         """
@@ -72,17 +75,34 @@ class Game:
         while self.running:
             self.tick()
 
+            mouse_pos = pygame.mouse.get_pos()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.play_button.is_clicked(mouse_pos):
+                        self.state = "PLAYING"
 
             self.update_layer.update()
 
             match self.state:
+                case "MAIN_MENU":
+                    self.screen.fill((200,200,200))
+                    self.play_button.draw(self.screen)
+
+                    mouse_pos = pygame.mouse.get_pos()
+                    
+                    self.play_button.is_hovered(mouse_pos)
+
                 case "PLAYING":
                     self.screen.fill((255,255,255))
-                    self.render_layer.draw(self.screen)
-                    self.update_layer.update()
+
+                    try:
+                        self.render_layer.draw(self.screen)
+                    except Exception as e:
+                        print (e)
+
 
             pygame.display.flip()
                 
