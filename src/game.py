@@ -36,9 +36,9 @@ class Game:
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
 
-        test_player = Player(0,0)
-        self.render_layer.add(test_player)
-        self.update_layer.add(test_player)
+        self.test_player = Player(0,0)
+        self.render_layer.add(self.test_player)
+        self.update_layer.add(self.test_player)
 
     def tick(self):
         """
@@ -63,15 +63,14 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
+            self.update_layer.update()
+
             match self.state:
                 case "PLAYING":
                     self.screen.fill((255,255,255))
-
-                    try:
-                        self.render_layer.draw(self.screen)
-                        self.update_layer.update(self.screen)
-                    except Exception as e:
-                        print (e)
+                    self.render_layer.draw(self.screen)
+                    self.test_player.gravity()
+                    self.test_player.update()
 
             pygame.display.flip()
                 
