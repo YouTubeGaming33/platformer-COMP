@@ -47,4 +47,5 @@ class Player(pygame.sprite.Sprite):
         print (self.rect.y)
 
     def update(self):
+        self.gravity()
         self.Movement()
