@@ -5,6 +5,7 @@ and the game is created.
 """
 import pygame
 from settings import SCREEN_HEIGHT, SCREEN_WIDTH, FRAMERATE
+from src.components.player import Player
 from src.components.tiles import TestTile
 from src.components.levelhandler import parse_level, load_level
 
@@ -33,6 +34,13 @@ class Game:
         self.delta_time = 0.1
         self.running = True
         self.state = "PLAYING"
+        
+        self.render_layer = pygame.sprite.Group()
+        self.update_layer = pygame.sprite.Group()
+
+        test_player = Player(0,0)
+        self.render_layer.add(test_player)
+        self.update_layer.add(test_player)
         
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
@@ -75,7 +83,12 @@ class Game:
                     self.screen.fill((255,255,255))
                     self.render_layer.draw(self.screen)
 
-        
+                    try:
+                        self.render_layer.draw(self.screen)
+                        self.update_layer.update(self.screen)
+                    except Exception as e:
+                        print (e)
+
             pygame.display.flip()
                 
 
