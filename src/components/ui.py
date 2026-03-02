@@ -7,6 +7,10 @@ class Button:
         self.rect = pygame.Rect(x,y,width,height)
         self.rect.centerx = x
         self.rect.centery = y
+
+        self.x = x
+        self.y = y
+
         self.text = text
         self.color = color
         self.text_color = text_color
@@ -21,6 +25,8 @@ class Button:
         
         rendered_text = self.font.render(self.text, True, self.text_color)
         text_rect = rendered_text.get_rect()
+        text_rect.centerx = self.x
+        text_rect.centery = self.y
         
         surface.blit(rendered_text, text_rect)
     
