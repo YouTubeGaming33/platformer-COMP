@@ -39,11 +39,14 @@ class Game:
         
         self.render_layer = pygame.sprite.Group()
         self.update_layer = pygame.sprite.Group()
+        self.tile_layer = pygame.sprite.Group()
 
         self.load_new_level(1)
         self.test_player = Player(0,0)
         self.render_layer.add(self.test_player)
         self.update_layer.add(self.test_player)
+        self.test_player.tile_sprites = self.tile_layer
+        self.test_player.check_collision(self.tile_layer)
 
         self.play_button = Button((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2), 100, 50, "Play")
 
@@ -71,8 +74,6 @@ class Game:
         """
         while self.running:
             self.tick()
-            
-            self.update_layer.update()
 
             mouse_pos = pygame.mouse.get_pos()
 

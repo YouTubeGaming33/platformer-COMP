@@ -18,34 +18,74 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.lives = 5.0
         self.direction = -1
-        self.speed = 10
+        self.speed = 1
+        self.tile_sprites = None
         
-    def Movement(self): # Handles Movement - Grabbing Key Pressed and having a corrosponding action
+    def Movement(self, dx): # Handles Movement - Grabbing Key Pressed and having a corrosponding action
         keyPressed = pygame.key.get_pressed()
         leftPressed = keyPressed[pygame.K_a] or keyPressed[pygame.K_LEFT]
         rightPressed = keyPressed[pygame.K_d] or keyPressed[pygame.K_RIGHT]
         jumpPressed = keyPressed[pygame.K_w] or keyPressed[pygame.K_SPACE] or keyPressed[pygame.K_UP]
 
         if leftPressed:
-            self.rect.x -= 5
+            dx -= self.speed
+            self.facing = -1
 
         if rightPressed:
-            self.rect.x += 5
+            dx += self.speed
+            self.facing = 1
 
         if jumpPressed:
             self.Jump()
 
+        return dx
+
     def Jump(self):
-        self.rect.y -= 5
+        self.y += GRAVITY
+
+        if self.y > TERMINAL_VELOCITY:
+            self.y = TERMINAL_VELOCITY
+
+        return self.y
+    
+    def update_position(self, dx, dy):
+        self.rect.x += dx
+        self.rect.y += dy
+
+    def check_collision(self, obstacles):
+        for obstacle in obstacles:
+            if self.rect.colliderect(obstacle.rect):
+                if self.y > 0 and self.rect.bottom <= obstacle.rect.centery:
+                    self.rect.bottom = obstacle.rect.top
+                    self.vel_y = 0
+                elif self.y < 0:
+                    self.rect.top = obstacle.rect.bottom
+                    self.y = 0
+                else:
+                    if self.rect.centerx < obstacle.rect.centerx:
+                        self.rect.right = obstacle.rect.left
+                    else:
+                        self.left = obstacle.rect.right 
 
     def gravity(self):
-        self.rect.y += TERMINAL_VELOCITY
-        if self.rect.y > SCREEN_HEIGHT and self.y >= 0:
-            self.y = 0
-            self.rect.y = SCREEN_HEIGHT
 
-        print (self.rect.y)
+        self.y += GRAVITY
+
+        if self.y > TERMINAL_VELOCITY:
+            self.y = TERMINAL_VELOCITY
+
+        return self.y
 
     def update(self):
+        dx = 0
+        dx = self.Movement(dx)
+
         self.gravity()
-        self.Movement()
+        dy = self.y
+
+        self.update_position(dx, dy)
+        if self.tile_sprites is not None:
+            self.check_collision(self.tile_sprites)
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
