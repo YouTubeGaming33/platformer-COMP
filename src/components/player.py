@@ -7,12 +7,13 @@
 # Pygame Documentation used for Movement Notes: https://stackoverflow.com/questions/72041240/pygame-character-movement
 
 import pygame
-from settings import TERMINAL_VELOCITY, SCREEN_HEIGHT, GRAVITY
+from settings import TERMINAL_VELOCITY, SCREEN_HEIGHT, GRAVITY, TILE_WIDTH, TILE_HEIGHT
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
         self.image = pygame.image.load("assets/sprites/player V1.png")
+        self.image = pygame.transform.scale(self.image, (TILE_WIDTH, TILE_HEIGHT))
         self.x = x
         self.y = y
         self.rect = self.image.get_rect()
